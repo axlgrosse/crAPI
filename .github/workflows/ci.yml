@@ -1,23 +1,23 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches:
-      - 'develop'
-      - 'main'
-    tags:
-      - 'v*.*.*'
-    paths:
-      - 'services/**'
-      - 'postman_collections/**'
-      - 'deploy/**'
-      - '.github/workflows/**'
-  pull_request:
-    paths:
-      - 'services/**'
-      - 'postman_collections/**'
-      - 'deploy/**'
-      - '.github/workflows/**'
+  # push:
+  #   branches:
+  #     - 'develop'
+  #     - 'main'
+  #   tags:
+  #     - 'v*.*.*'
+  #   paths:
+  #     - 'services/**'
+  #     - 'postman_collections/**'
+  #     - 'deploy/**'
+  #     - '.github/workflows/**'
+  # pull_request:
+  #   paths:
+  #     - 'services/**'
+  #     - 'postman_collections/**'
+  #     - 'deploy/**'
+  #     - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:

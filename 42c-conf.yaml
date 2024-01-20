@@ -1,0 +1,8 @@
+audit:
+  branches:
+    main: 
+      discovery:
+        search:
+          - openapi-spec/*.json
+          - openapi-spec/*.yaml
+          

@@ -1,7 +1,7 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "title" : "OWASP crAPI API",
+    "title" : "OWASP crAPI remidiated",
     "version" : "1-oas3"
   },
   "externalDocs" : {
@@ -3220,7 +3220,7 @@
       },
       "ProfileVideo" : {
         "type" : "object",
-        "required" : [ "id", "video_name", "converstion_params", "video", "user" ],
+        "required" : [ "id", "video_name", "conversion_params", "video", "user" ],
         "properties" : {
           "id" : {
             "type" : "number"
@@ -3306,7 +3306,7 @@
             "type" : "string"
           }
         },
-        "required" : [ "amount", "coupon_code", "CreatedAt" ],
+        "required" : [ "amount", "coupon_code", "createdAt" ],
         "example" : {
           "coupon_code" : "TRAC075",
           "amount" : "75",
@@ -3338,7 +3338,7 @@
             "type" : "string"
           }
         },
-        "required" : [ "amount", "coupon_code", "CreatedAt" ],
+        "required" : [ "amount", "coupon_code", "createdAt" ],
         "example" : {
           "coupon_code" : "TRAC075",
           "amount" : "75",

@@ -41,7 +41,7 @@ jobs:
             # Upload results to Github Code Scanning
             # Set to false if you don't have Github Advanced Security enabled.
             api-definition: api-specifications/PhotoManager.json
-            api-credential: ${{ steps.get_photoapi_token.outputs.CRAPI_TOKEN }}
+            api-credential: ${{ steps.get_baerer_token.outputs.CRAPI_TOKEN }}
             target-url: "http://crapi.test:8888"
             upload-to-code-scanning: true
             scan-report: 42Crunch_RawReport_${{ github.run_id }}.json

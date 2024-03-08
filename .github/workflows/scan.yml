@@ -1,0 +1,71 @@
+name: "42Crunch API Security Scan"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+  pull_request:
+    types: [opened, reopened] 
+
+env:
+    TARGET_URL: "http://crapi.test:8888"
+    # For illustration purposes only - This is fake data. 
+    # Use Secrets when dealing with sensitive data.
+    USER_NAME: "Jeanne.Rogahn@example.com"
+    USER_PASS: "WxUgFWlPSUfRGFh"
+
+jobs:
+  run_42c_scan:
+    runs-on: ubuntu-20.04
+    permissions:
+     contents: read # for actions/checkout to fetch code
+     security-events: write # for results upload to Github Code Scanning
+    
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: get_baerer_token
+        id: get_baerer_token
+        run: |
+          login_response=$(python .42c/scripts/crapi-login.py -c GITHUB -u ${{ env.USER_NAME }} -p ${{ env.USER_PASS }} -t ${{ env.TARGET_URL }})
+          echo "CRAPI_TOKEN=$login_response" >> $GITHUB_OUTPUT
+      - name: Scan API for vulnerabilities
+        uses: 42Crunch/api-security-scan-action-freemium@v1
+        with:
+            # Upload results to Github Code Scanning
+            # Set to false if you don't have Github Advanced Security enabled.
+            api-definition: api-specifications/PhotoManager.json
+            api-credential: ${{ steps.get_photoapi_token.outputs.CRAPI_TOKEN }}
+            target-url: "http://crapi.test:8888"
+            upload-to-code-scanning: true
+            scan-report: 42Crunch_RawReport_${{ github.run_id }}.json
+            export-as-pdf: 42Crunch_ScanReport_${{ github.run_id }}.pdf
+            log-level: info
+            sarif-report: 42Crunch_ScanReport_${{ github.run_id }}.SARIF
+      - name: save-sarif-report
+        if: always()        
+        uses: actions/upload-artifact@v3
+        with:
+            name: 42Crunch_ScanReport_${{ github.run_id }}
+            path: 42Crunch_ScanReport_${{ github.run_id }}.SARIF
+            if-no-files-found: error
+      - name: save-scan-report
+        if: always()        
+        uses: actions/upload-artifact@v3
+        with:
+            name: 42Crunch_ScanReport_${{ github.run_id }}
+            path: 42Crunch_RawReport_${{ github.run_id }}.json
+            if-no-files-found: error  
+      - name: save-pdf-report
+        if: always()        
+        uses: actions/upload-artifact@v3
+        with:
+          name: 42Crunch_ScanReport_${{ github.run_id }}
+          path: 42Crunch_ScanReport_${{ github.run_id }}.pdf
+          if-no-files-found: error          

@@ -1,0 +1,3 @@
+apis:
+  openapi-spec/openapi-spec-remidiated.json:
+    alias: owasp-crapi-remidiated

@@ -2,11 +2,11 @@ name: "42Crunch API Security Scan"
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-    - main
-  pull_request:
-    types: [opened, reopened] 
+#  push:
+#     branches:
+#     - main
+#   pull_request:
+#     types: [opened, reopened] 
 
 env:
     TARGET_URL: "http://crapi.test:8888"
